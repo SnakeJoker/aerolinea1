@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			Object.keys(flightsByCountry).forEach((country) => {
 				const flightsForCountry = flightsByCountry[country];
-				const quarterCount = Math.ceil(flightsForCountry.length * 0.7);
+				const quarterCount = Math.ceil(flightsForCountry.length * 0.5);
 				const selectedFlights = flightsForCountry.slice(0, quarterCount);
 
 				selectedFlights.forEach((flight) => {
