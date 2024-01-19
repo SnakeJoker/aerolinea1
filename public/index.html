@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+		<link rel="stylesheet" href="/public/style/style.css" />
+		<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+		<title>Consulta de Vuelos</title>
+	</head>
+	<body>
+		<nav>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="login.html">Login</a></li>
+			</ul>
+		</nav>
+		<header>
+			<h1>Consulta de Vuelos</h1>
+		</header>
+
+		<main>
+			<section>
+				<form id="buscarForm">
+					<label for="numero_vuelo">Número de Vuelo:</label>
+					<input type="text" id="numero_vuelo" required />
+					<button type="button" onclick="buscarVuelo()">Buscar</button>
+				</form>
+				<div id="resultadoVuelo"></div>
+			</section>
+			<section></section>
+			<section id="filter">
+				<label for="filterBy">Filtrar por:</label>
+				<select id="filterBy">
+					<option value="all">Todos los vuelos</option>
+					<option value="domestic">Vuelos nacionales</option>
+					<option value="international">Vuelos internacionales</option>
+				</select>
+			</section>
+
+			<section id="map"></section>
+
+			<section id="flightList">
+				<!-- Aquí se mostrarán los vuelos -->
+			</section>
+		</main>
+		<script src="../public/js/app.js"></script>
+	</body>
+</html>

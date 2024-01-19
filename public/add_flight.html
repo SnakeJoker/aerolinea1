@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="/public/style/style.css" />
+		<script src="/public/js/app.js"></script>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+		<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+		<title>Añadir Vuelo</title>
+	</head>
+	<body>
+		<nav>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="login.html">Login</a></li>
+			</ul>
+            <div id="user-container" style="display: none;">
+                <span id="username-display"></span>
+                <button onclick="logout()">Cerrar Sesión</button>
+            </div>
+		</nav>
+		<header>
+			<h1>Añadir Nuevo Vuelo</h1>
+		</header>
+		<main>
+			<div>
+				<form id="addFlightForm" method="POST">
+					<label for="flightNumber">Número de Vuelo:</label>
+					<input type="text" id="flightNumber" name="flightNumber" required />
+	
+					<label for="origin">Origen:</label>
+					<input type="text" id="origin" name="origin" required />
+	
+					<label for="destination">Destino:</label>
+					<input type="text" id="destination" name="destination" required />
+	
+					<label for="departureTime">Hora de Salida:</label>
+					<input
+						type="datetime-local"
+						id="departureTime"
+						name="departureTime"
+						required
+					/>
+	
+					<label for="arrivalTime">Hora de Llegada:</label>
+					<input type="datetime-local" id="arrivalTime" name="arrivalTime" required />
+	
+					<label for="layovers">Escala(s):</label>
+					<textarea id="layovers" name="layovers"></textarea>
+	
+					<button type="button" onclick="addFlight()">Guardar Vuelo</button>
+				</form>
+			</div>
+		</main>
+		<script src="/public/js/app.js"></script>
+	</body>
+</html>

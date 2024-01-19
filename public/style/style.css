@@ -1,0 +1,218 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #3498db;
+	color: #fff;
+	text-align: center;
+	padding: 1em 0;
+}
+
+main {
+	padding: 20px;
+}
+
+#search,
+#filter {
+	margin-bottom: 20px;
+}
+
+#search label,
+#filter label {
+	margin-right: 10px;
+}
+
+#search input {
+	padding: 5px;
+	margin-right: 10px;
+}
+
+#search button,
+#filter select {
+	padding: 7px;
+	background-color: #3498db;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+}
+
+#map {
+	height: 400px;
+	margin-bottom: 20px;
+}
+
+#flightList {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
+.flightCard {
+	border: 1px solid #ddd;
+	padding: 15px;
+	border-radius: 8px;
+	width: 300px;
+}
+
+.flightCard h2 {
+	color: #3498db;
+}
+
+.flightCard p {
+	margin: 5px 0;
+}
+
+/* Reset de estilos y estilos básicos para la barra de navegación */
+body {
+	margin: 0;
+	padding: 0;
+}
+
+nav {
+	background-color: #333; /* Color de fondo de la barra de navegación */
+	color: white; /* Color del texto en la barra de navegación */
+	padding: 10px;
+}
+
+ul {
+	list-style: none; /* Quitar los puntos de la lista */
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	display: inline-block; /* Mostrar elementos de la lista en línea */
+	margin-right: 20px; /* Espaciado entre elementos de la lista */
+}
+
+a {
+	text-decoration: none; /* Quitar la subraya de los enlaces */
+	color: white; /* Color del texto de los enlaces */
+}
+
+/* Estilo para el enlace activo (por ejemplo, la página actual) */
+a.current {
+	border-bottom: 2px solid white; /* Línea inferior para indicar el enlace activo */
+}
+
+/* Estilos para el formulario de registro */
+form {
+	max-width: 400px; /* Ancho máximo del formulario */
+	margin: 0 auto; /* Centrar el formulario en la página */
+	background-color: #f4f4f4; /* Color de fondo del formulario */
+	padding: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+label {
+	display: block; /* Mostrar etiquetas en una línea nueva */
+	margin-bottom: 8px; /* Espaciado inferior entre etiquetas y campos de entrada */
+	font-weight: bold; /* Texto en negrita para las etiquetas */
+}
+
+input {
+	width: 100%; /* Ancho completo para los campos de entrada */
+	padding: 10px; /* Relleno interno */
+	margin-bottom: 16px; /* Espaciado inferior entre campos de entrada */
+	box-sizing: border-box; /* Incluir el relleno en el ancho total */
+}
+
+button {
+	background-color: #3498db; /* Color de fondo del botón */
+	color: #fff; /* Color del texto del botón */
+	padding: 10px 15px; /* Relleno interno del botón */
+	border: none; /* Quitar el borde del botón */
+	cursor: pointer; /* Cambiar el cursor al pasar por encima del botón */
+}
+
+button:hover {
+	background-color: #2980b9; /* Color de fondo del botón al pasar el ratón */
+}
+
+/* Estilo para mensajes de error */
+.error-message {
+	color: #e74c3c; /* Color rojo para mensajes de error */
+	margin-top: 5px; /* Espaciado superior para mensajes de error */
+}
+
+#resultadoVuelo {
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	background-color: #f8f8f8;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+#resultadoVuelo p {
+	margin: 0;
+}
+
+/* Estilos para la barra de carga */
+.progress-bar-container {
+	width: 90%; /* Ocupa el 90% del contenedor */
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.progress-bar {
+	height: 30px;
+	background-color: #e0e0e0;
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	border-radius: 10px;
+	text-align: center;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.progress-bar:before {
+	content: "";
+	display: block;
+	height: 100%;
+	background-color: #4caf50;
+	top: 0;
+	left: 0;
+	transition: width 0.5s ease;
+	border-radius: 8px;
+}
+
+/* Estilos para las etapas del vuelo */
+.progress-bar.departure:before {
+	content: "Salida";
+	color: black;
+	text-align: center;
+	line-height: 30px;
+	background-color: orange;
+}
+
+.progress-bar.on-the-way:before {
+	content: "En Camino";
+	color: black;
+	text-align: center;
+	line-height: 30px;
+	background-color: lightseagreen;
+}
+
+.progress-bar.approaching:before {
+	content: "Aproximándose";
+	color: black;
+	text-align: center;
+	line-height: 30px;
+	background-color: green;
+}
+
+.progress-bar.arrived:before {
+	content: "Arribado";
+	color: black;
+	text-align: center;
+	line-height: 30px;
+	background-color: greenyellow;
+}
