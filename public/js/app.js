@@ -5,14 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
 			mapContainer.style.boxShadow = "none"; // Desactivar sombras en el contenedor del mapa
 
 			map = L.map(mapContainer, {
-				preferCanvas: true, // Usar lienzo en lugar de SVG para mejorar el rendimiento
-				zoomControl: false, // Desactivar control de zoom predeterminado de Leaflet
+				preferCanvas: false, // Usar lienzo en lugar de SVG para mejorar el rendimiento
+				zoomControl: true, // Desactivar control de zoom predeterminado de Leaflet
 			}).setView([0, 0], 2);
 
 			L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 				attribution: "© OpenStreetMap contributors",
 				detectRetina: true, // Detectar pantalla Retina para mejorar el rendimiento
-				noWrap: true, // Desactivar repetición del mapa para mejorar el rendimiento
+				noWrap: false, // Desactivar repetición del mapa para mejorar el rendimiento
 			}).addTo(map);
 		}
 
@@ -118,14 +118,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	mostrarResultado = (vuelo) => {
 		const resultadoDiv = document.getElementById("resultadoVuelo");
-	
+
 		resultadoDiv.innerHTML = "";
-	
+
 		if (vuelo) {
 			resultadoDiv.innerHTML += `<p>Número de Vuelo: ${vuelo.numero_vuelo}</p>`;
 			resultadoDiv.innerHTML += `<p>Origen: ${vuelo.origen}</p>`;
 			resultadoDiv.innerHTML += `<p>Destino: ${vuelo.destino}</p>`;
-	
+
 			// Formato de las horas de salida y llegada
 			const formatoFecha = (fecha) => {
 				const options = {
@@ -134,49 +134,51 @@ document.addEventListener("DOMContentLoaded", () => {
 					second: "numeric",
 					day: "numeric",
 					month: "numeric",
-					year: "numeric"
+					year: "numeric",
 				};
-	
+
 				return new Date(fecha).toLocaleString("es-ES", options);
 			};
-	
+
 			const fechaSalidaObj = new Date(vuelo.hora_salida);
 			const fechaLlegadaObj = new Date(vuelo.hora_llegada);
 			const fechaActualObj = new Date();
-	
+
 			const horaSalidaFormateada = formatoFecha(fechaSalidaObj);
 			const horaLlegadaFormateada = formatoFecha(fechaLlegadaObj);
 			const horaActualFormateada = formatoFecha(fechaActualObj);
-	
+
 			console.log(horaSalidaFormateada);
 			console.log(horaLlegadaFormateada);
 			console.log(horaActualFormateada);
-	
+
 			resultadoDiv.innerHTML += `<p>Hora de Salida: ${horaSalidaFormateada}</p>`;
 			resultadoDiv.innerHTML += `<p>Hora de Llegada: ${horaLlegadaFormateada}</p>`;
-	
+
 			resultadoDiv.innerHTML += `<p>Escalas: ${vuelo.escalas}</p>`;
-	
+
 			// Calcula el tiempo total y el tiempo transcurrido
 			const tiempoTotal = fechaLlegadaObj - fechaSalidaObj;
 			const tiempoTranscurrido = fechaActualObj - fechaSalidaObj;
-	
+
 			// Calcula el porcentaje transcurrido
 			const porcentajeTranscurrido = (tiempoTranscurrido / tiempoTotal) * 100;
-	
+
 			// Crea la barra de carga
 			const progressBar = document.createElement("div");
 			progressBar.classList.add("progress-bar");
 			resultadoDiv.appendChild(progressBar);
-	
+
 			// Crea la etiqueta de porcentaje
 			const percentageLabel = document.createElement("p");
-			percentageLabel.textContent = `Progreso del Vuelo: ${porcentajeTranscurrido.toFixed(2)}%`;
+			percentageLabel.textContent = `Progreso del Vuelo: ${porcentajeTranscurrido.toFixed(
+				2
+			)}%`;
 			resultadoDiv.appendChild(percentageLabel);
-	
+
 			// Actualiza el ancho de la barra de carga
 			progressBar.style.width = `${porcentajeTranscurrido}%`;
-	
+
 			// Agrega clases según la etapa del vuelo
 			if (porcentajeTranscurrido < 10) {
 				progressBar.classList.add("early-departure");
@@ -191,7 +193,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			resultadoDiv.innerHTML = "<p>No se encontraron datos para el vuelo.</p>";
 		}
 	};
-	
 
 	const updateMap = (map, flights) => {
 		map.eachLayer((layer) => {
@@ -203,7 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		flights.forEach((flight) => {
 			if (flight[6] && flight[5]) {
 				const marker = L.marker([flight[6], flight[5]], {
-					riseOnHover: false, // Desactivar elevación al pasar el ratón
+					riseOnHover: true, // Desactivar elevación al pasar el ratón
 				})
 					.bindPopup(
 						`<b>${flight[1] || "Desconocido"}</b><br>Origen - Destino: ${
@@ -237,49 +238,39 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 	};
 
-	const displayFlights = (data) => {
+	const displayFlights = (data, limit = 200) => {
 		const flightListContainer = document.getElementById("flightList");
 		const map = initializeMap();
 
 		if (data && data.states && data.states.length > 0) {
-			const flightsByCountry = data.states.reduce((acc, flight) => {
-				const country = flight[2] || "Desconocido";
-				acc[country] = acc[country] || [];
-				acc[country].push(flight);
-				return acc;
-			}, {});
+			// Obtener el número específico de vuelos
+			const selectedFlights = data.states.slice(0, limit);
 
-			Object.keys(flightsByCountry).forEach((country) => {
-				const flightsForCountry = flightsByCountry[country];
-				const quarterCount = Math.ceil(flightsForCountry.length * 0.5);
-				const selectedFlights = flightsForCountry.slice(0, quarterCount);
+			selectedFlights.forEach((flight) => {
+				const flightCard = document.createElement("div");
+				flightCard.classList.add("flightCard");
 
-				selectedFlights.forEach((flight) => {
-					const flightCard = document.createElement("div");
-					flightCard.classList.add("flightCard");
+				const flightName = document.createElement("h2");
+				flightName.textContent = flight[1] || "Desconocido";
 
-					const flightName = document.createElement("h2");
-					flightName.textContent = flight[1] || "Desconocido";
+				const originDestination = document.createElement("p");
+				const origin = flight[2] || "Desconocido";
+				const destination = flight[4] || "Desconocido";
+				originDestination.textContent = `Origen - Destino: ${origin} - ${destination}`;
 
-					const originDestination = document.createElement("p");
-					originDestination.textContent = `Origen - Destino: ${
-						flight[2] || "Desconocido"
-					} - ${flight[4] || "Desconocido"}`;
+				const arrivalTime = document.createElement("p");
+				arrivalTime.textContent = `Última Actualización: ${new Date(
+					flight[11] * 1000
+				).toLocaleString()}`;
 
-					const arrivalTime = document.createElement("p");
-					arrivalTime.textContent = `Última Actualización: ${new Date(
-						flight[11] * 1000
-					).toLocaleString()}`;
+				flightCard.appendChild(flightName);
+				flightCard.appendChild(originDestination);
+				flightCard.appendChild(arrivalTime);
 
-					flightCard.appendChild(flightName);
-					flightCard.appendChild(originDestination);
-					flightCard.appendChild(arrivalTime);
-
-					flightListContainer.appendChild(flightCard);
-				});
-
-				updateMap(map, selectedFlights);
+				flightListContainer.appendChild(flightCard);
 			});
+
+			updateMap(map, selectedFlights);
 		} else {
 			console.error("Datos de vuelos no válidos o vacíos.");
 		}
